@@ -7,7 +7,6 @@ import Image from "next/image";
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
@@ -15,6 +14,7 @@ import {
 } from "@/components/ui/pagination";
 
 const USERS_PER_PAGE = 10;
+const TOTAL_PAGES = 3; // 3 paginas
 
 export default function Home() {
   const { data: users, isLoading, error } = useUsers();
@@ -23,10 +23,13 @@ export default function Home() {
   if (isLoading) return <p>Carregando usuários...</p>;
   if (error) return <p>Erro ao carregar usuários</p>;
 
-  const totalPages = Math.ceil(users.length / USERS_PER_PAGE);
+  // 30 usuário são retornados
+  const limitedUsers = users.slice(0, USERS_PER_PAGE * TOTAL_PAGES);
+
+  // Calculando exibição
   const startIndex = (currentPage - 1) * USERS_PER_PAGE;
   const endIndex = startIndex + USERS_PER_PAGE;
-  const paginatedUsers = users.slice(startIndex, endIndex);
+  const paginatedUsers = limitedUsers.slice(startIndex, endIndex);
 
   return (
     <div className="bg-gray-100 p-6">
@@ -59,25 +62,23 @@ export default function Home() {
             />
           </PaginationItem>
 
-          {[...Array(totalPages)].map((_, index) => (
-            <PaginationItem key={index}>
+          {[1, 2, 3].map((page) => (
+            <PaginationItem key={page}>
               <PaginationLink
                 href="#"
-                isActive={currentPage === index + 1}
-                onClick={() => setCurrentPage(index + 1)}
+                isActive={currentPage === page}
+                onClick={() => setCurrentPage(page)}
               >
-                {index + 1}
+                {page}
               </PaginationLink>
             </PaginationItem>
           ))}
 
-          {totalPages > 3 && <PaginationItem><PaginationEllipsis /></PaginationItem>}
-
           <PaginationItem>
             <PaginationNext
               href="#"
-              onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-              className={currentPage === totalPages ? "pointer-events-none opacity-50" : ""}
+              onClick={() => setCurrentPage((prev) => Math.min(prev + 1, TOTAL_PAGES))}
+              className={currentPage === TOTAL_PAGES ? "pointer-events-none opacity-50" : ""}
             />
           </PaginationItem>
         </PaginationContent>
