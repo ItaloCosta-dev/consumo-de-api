@@ -72,14 +72,13 @@ export default function Home() {
                 <AlertDialogHeader>
                   <AlertDialogTitle>Infomações do usuário</AlertDialogTitle>
                   <div>
-                    <AlertDialogDescription className="flex flex-col">
-                      <p>Nome: {user.firstName} {user.lastName}</p>
-                      <p>Idade: {user.age}</p>
-                      <p>Sexo: {user.gender}</p>
-                      <p>email: {user.email}</p>
-                      <p>Contato: {user.phone}</p>
-                      <p>Nacionalidade: {user.country}</p>
-                    </AlertDialogDescription>
+                    <div className="flex flex-col">
+                      <span>Nome: {user.firstName} {user.lastName}</span>
+                      <span>Idade: {user.age}</span>
+                      <span>Sexo: {user.gender}</span>
+                      <span>Email: {user.email}</span>
+                      <span>Contato: {user.phone}</span>
+                    </div>
                   </div>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
