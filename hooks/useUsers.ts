@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 const fetchUsers = async () => {
-  const { data } = await axios.get("https://dummyjson.com/users?limit=10");
+  const { data } = await axios.get("https://dummyjson.com/users?limit=30");
   return data.users; 
 };
 
